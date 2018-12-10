@@ -1,5 +1,8 @@
 const describe = (desc, fn) => {
   console.log(desc)
+  $(document).ready(function(){
+    showMessage(desc);
+  })
   fn()
 }
 
@@ -25,11 +28,30 @@ const matchers = (exp) => ({
 })
 
 const expect = (exp) => matchers(exp)
+// Create element for message
+function showMessage (value) {
+  var title = document.createElement("H1");  
+  var t = document.createTextNode(value);       
+  title.appendChild(t);                               
+  document.body.appendChild(title);
 
+}
+
+function showResult(value) {
+  var title = document.createElement("H2");  
+  var t = document.createTextNode(value);
+  if (value === 'Pass') {
+    title.style.color = 'Green';
+  }else{
+    title.style.color = 'Red';
+  }
+  title.appendChild(t);                               
+  document.body.appendChild(title);
+}
 function pass() {
-  document.getElementById("pass").innerHTML = " Test pass";
+  showResult("Pass")
 }
 
 function fail(expec, actual) {
-  document.getElementById("fail").innerHTML =  " Test fail, expected: " + expec + " got: " + actual;
+  showResult("Fail")
 }
